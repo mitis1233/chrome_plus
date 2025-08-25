@@ -60,13 +60,6 @@ HANDLE WINAPI MyMapViewOfFile(_In_ HANDLE hFileMappingObject,
 
           // Disable updates by redirecting the update URL to a non-existent address.
           std::string status_str = " [已停用更新";
-
-          if (ReplaceStringInPlace(html, R"(https://tools.google.com/service/update2)", R"(https://0.0.0.0)")) {
-            status_str += " toolsWeb";
-          }
-          if (ReplaceStringInPlace(html, R"(https://update.googleapis.com/service/update2)", R"(https://0.0.0.0)")) {
-            status_str += " updateWeb";
-          }
           if (ReplaceStringInPlace(html, R"(hidden="[[!showUpdateStatus_]]")", R"(hidden="true")")) {
             status_str += " showUpdateStatus";
           }
