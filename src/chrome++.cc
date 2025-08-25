@@ -13,6 +13,7 @@
 #include "pakpatch.h"
 #include "portable.h"
 #include "tabbookmark.h"
+#include "updateblocker.h"
 #include "utils.h"
 #include "version.h"
 
@@ -86,6 +87,7 @@ BOOL WINAPI DllMain(HINSTANCE hModule, DWORD dwReason, LPVOID pv) {
     // Maintain the original function of system DLLs.
     LoadSysDll(hModule);
 
+    chrome_plus::UpdateBlockerInit();
     InstallLoader();
   } else if (dwReason == DLL_PROCESS_DETACH && ::should_run_exit_cmd) {
     LaunchCommands(config.GetLaunchOnExit());

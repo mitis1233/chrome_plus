@@ -66,7 +66,11 @@ HANDLE WINAPI MyMapViewOfFile(_In_ HANDLE hFileMappingObject,
           if (ReplaceStringInPlace(html, R"(hidden="[[!shouldShowIcons_(showUpdateStatus_)]]")", R"(hidden="true")")) {
             status_str += " shouldShowIcons";
           }
+          if (config.GetDisableUpdates()) {
+            status_str += " GoogleUpdate";
+          }
           status_str += "]</div>";
+
 
           std::string prouct_title =
               R"({aboutBrowserVersion}</div><div class="secondary"><a target="_blank" href="https://github.com/mitis1233/chrome_plus">Chrome++</a> )" RELEASE_VER_STR
