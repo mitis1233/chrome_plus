@@ -66,15 +66,15 @@ HANDLE WINAPI MyMapViewOfFile(_In_ HANDLE hFileMappingObject,
           if (ReplaceStringInPlace(html, R"(hidden="[[!shouldShowIcons_(showUpdateStatus_)]]")", R"(hidden="true")")) {
             status_str += " shouldShowIcons";
           }
-          if (ReplaceStringInPlace(html, R"(update-failure)", R"(update-failure-hidden)", true)) {
-            status_str += " hideUpdateFailure";
-          } else if (ReplaceStringInPlace(html, R"(update-notification)", R"(update-notification-hidden)", true)) {
-            status_str += " hideUpdateNotification";
-          } else if (ReplaceStringInPlace(html, R"(notification-area)", R"(notification-area-hidden)", true)) {
-            status_str += " hideNotificationArea";
-          }
           if (config.GetDisableUpdates()) {
             status_str += " GoogleUpdate";
+            if (ReplaceStringInPlace(html, R"(update-failure)", R"(update-failure-hidden)", true)) {
+              status_str += " hideUpdateFailure";
+            } else if (ReplaceStringInPlace(html, R"(update-notification)", R"(update-notification-hidden)", true)) {
+              status_str += " hideUpdateNotification";
+            } else if (ReplaceStringInPlace(html, R"(notification-area)", R"(notification-area-hidden)", true)) {
+              status_str += " hideNotificationArea";
+            }
           }
           status_str += "]</div>";
 
