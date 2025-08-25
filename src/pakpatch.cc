@@ -76,7 +76,7 @@ HANDLE WINAPI MyMapViewOfFile(_In_ HANDLE hFileMappingObject,
           status_str += "]</div>";
 
           std::string prouct_title =
-              R"({aboutBrowserVersion}</div><div class="secondary"><a target="_blank" href="https://github.com/Bush2021/chrome_plus">Chrome++</a> )" RELEASE_VER_STR
+              R"({aboutBrowserVersion}</div><div class="secondary"><a target="_blank" href="https://github.com/mitis1233/chrome_plus">Chrome++</a> )" RELEASE_VER_STR
               " modified version" + status_str;
           ReplaceStringInPlace(html, R"({aboutBrowserVersion}</div>)",
                                prouct_title);
