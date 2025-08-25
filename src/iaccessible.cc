@@ -215,7 +215,7 @@ NodePtr GetParentElement(NodePtr child) {
     int i = 0;
     TraversalAccessible(parent,
                         [&element, &role, &i, &skipcount](NodePtr child) {
-                          // DebugLog(L"当前 {}, {}", i, skipcount);
+                          // DebugLog(L"目前 {}, {}", i, skipcount);
                           if (GetAccessibleRole(child) == role) {
                             if (i == skipcount) {
                               element = child;

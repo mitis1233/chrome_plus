@@ -9,6 +9,7 @@ class Config {
 
   // general
   const std::wstring& GetCommandLine() const { return command_line_; }
+  bool GetDisableUpdates() const { return disable_updates_; }
   const std::wstring& GetLaunchOnStartup() const { return launch_on_startup_; }
   const std::wstring& GetLaunchOnExit() const { return launch_on_exit_; }
   const std::wstring& GetUserDataDir() const { return user_data_dir_; }
@@ -46,6 +47,7 @@ class Config {
  private:
   // general
   std::wstring command_line_;
+  bool disable_updates_;
   std::wstring launch_on_startup_;
   std::wstring launch_on_exit_;
   std::wstring user_data_dir_;

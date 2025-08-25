@@ -9,6 +9,7 @@
 #include "pakfile.h"
 #include "utils.h"
 #include "version.h"
+#include "config.h"
 
 namespace {
 
@@ -42,7 +43,7 @@ HANDLE WINAPI MyMapViewOfFile(_In_ HANDLE hFileMappingObject,
       DebugLog(L"Unhook RawMapViewOfFile failed {}", status);
     }
 
-    if (buffer) {
+    if (buffer && config.GetDisableUpdates()) {
       // Traverse the gzip file.
       TraversalGZIPFile(static_cast<BYTE*>(buffer), [=](uint8_t* begin,
                                                         uint32_t size,
@@ -57,19 +58,26 @@ HANDLE WINAPI MyMapViewOfFile(_In_ HANDLE hFileMappingObject,
           std::string html(reinterpret_cast<char*>(begin), size);
           compression_html(html);
 
-          // RemoveUpdateError
-          // if (IsNeedPortable())
-          {
-            ReplaceStringInPlace(html, R"(hidden="[[!showUpdateStatus_]]")",
-                                 R"(hidden="true")");
-            ReplaceStringInPlace(
-                html, R"(hidden="[[!shouldShowIcons_(showUpdateStatus_)]]")",
-                R"(hidden="true")");
-          }
+          // Disable updates by redirecting the update URL to a non-existent address.
+          std::string status_str = " [已停用更新";
 
-          const char prouct_title[] =
+          if (ReplaceStringInPlace(html, R"(https://tools.google.com/service/update2)", R"(https://0.0.0.0)")) {
+            status_str += " toolsWeb";
+          }
+          if (ReplaceStringInPlace(html, R"(https://update.googleapis.com/service/update2)", R"(https://0.0.0.0)")) {
+            status_str += " updateWeb";
+          }
+          if (ReplaceStringInPlace(html, R"(hidden="[[!showUpdateStatus_]]")", R"(hidden="true")")) {
+            status_str += " showUpdateStatus";
+          }
+          if (ReplaceStringInPlace(html, R"(hidden="[[!shouldShowIcons_(showUpdateStatus_)]]")", R"(hidden="true")")) {
+            status_str += " shouldShowIcons";
+          }
+          status_str += "]</div>";
+
+          std::string prouct_title =
               R"({aboutBrowserVersion}</div><div class="secondary"><a target="_blank" href="https://github.com/Bush2021/chrome_plus">Chrome++</a> )" RELEASE_VER_STR
-              R"( modified version</div>)";
+              " modified version" + status_str;
           ReplaceStringInPlace(html, R"({aboutBrowserVersion}</div>)",
                                prouct_title);
 

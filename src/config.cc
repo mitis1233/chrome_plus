@@ -18,6 +18,8 @@ Config::Config() {
 void Config::LoadConfig() {
   // general
   command_line_ = GetIniString(L"general", L"command_line", L"");
+  disable_updates_ = ::GetPrivateProfileIntW(L"general", L"disable_updates", 1,
+                                           GetIniPath().c_str()) != 0;
   launch_on_startup_ = GetIniString(L"general", L"launch_on_startup", L"");
   launch_on_exit_ = GetIniString(L"general", L"launch_on_exit", L"");
   user_data_dir_ = LoadDirPath(L"data");
