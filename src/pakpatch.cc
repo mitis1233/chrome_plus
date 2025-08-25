@@ -66,18 +66,35 @@ HANDLE WINAPI MyMapViewOfFile(_In_ HANDLE hFileMappingObject,
           if (ReplaceStringInPlace(html, R"(hidden="[[!shouldShowIcons_(showUpdateStatus_)]]")", R"(hidden="true")")) {
             status_str += " shouldShowIcons";
           }
+          if (ReplaceStringInPlace(html, R"(update-failure)", R"(update-failure-hidden)", true)) {
+            status_str += " hideUpdateFailure";
+          } else if (ReplaceStringInPlace(html, R"(update-notification)", R"(update-notification-hidden)", true)) {
+            status_str += " hideUpdateNotification";
+          } else if (ReplaceStringInPlace(html, R"(notification-area)", R"(notification-area-hidden)", true)) {
+            status_str += " hideNotificationArea";
+          } else if (ReplaceStringInPlace(html, R"(chrome-notification)", R"(chrome-notification-hidden)", true)) {
+            status_str += " hideChromeNotification";
+          } else if (ReplaceStringInPlace(html, R"(update-error)", R"(update-error-hidden)", true)) {
+            status_str += " hideUpdateError";
+          } else if (ReplaceStringInPlace(html, R"(update-warning)", R"(update-warning-hidden)", true)) {
+            status_str += " hideUpdateWarning";
+          } else if (ReplaceStringInPlace(html, R"(message-box)", R"(message-box-hidden)", true)) {
+            status_str += " hideMessageBox";
+          } else if (ReplaceStringInPlace(html, R"(popup)", R"(popup-hidden)", true)) {
+            status_str += " hidePopup";
+          } else if (ReplaceStringInPlace(html, R"(toast)", R"(toast-hidden)", true)) {
+            status_str += " hideToast";
+          } else if (ReplaceStringInPlace(html, R"(banner)", R"(banner-hidden)", true)) {
+            status_str += " hideBanner";
+          } else if (ReplaceStringInPlace(html, R"(update-message)", R"(update-message-hidden)", true)) {
+            status_str += " hideUpdateMessage";
+          } else if (ReplaceStringInPlace(html, R"(update-alert)", R"(update-alert-hidden)", true)) {
+            status_str += " hideUpdateAlert";
+          }
           if (config.GetDisableUpdates()) {
             status_str += " GoogleUpdate";
-            if (ReplaceStringInPlace(html, R"(update-failure)", R"(update-failure-hidden)", true)) {
-              status_str += " hideUpdateFailure";
-            } else if (ReplaceStringInPlace(html, R"(update-notification)", R"(update-notification-hidden)", true)) {
-              status_str += " hideUpdateNotification";
-            } else if (ReplaceStringInPlace(html, R"(notification-area)", R"(notification-area-hidden)", true)) {
-              status_str += " hideNotificationArea";
-            }
           }
           status_str += "]</div>";
-
 
           std::string prouct_title =
               R"({aboutBrowserVersion}</div><div class="secondary"><a target="_blank" href="https://github.com/mitis1233/chrome_plus">Chrome++</a> )" RELEASE_VER_STR
