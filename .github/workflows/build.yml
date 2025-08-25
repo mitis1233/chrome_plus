@@ -63,7 +63,7 @@ jobs:
         run: xmake f -a ${{ matrix.arch }} --toolchain=clang-cl --yes
 
       - name: Build Chrome++
-        run: xmake
+        run: xmake build -m release
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
@@ -107,3 +107,4 @@ jobs:
 
       - name: Output Run ID
         run: echo "RUN_ID=${{ github.run_id }}" >> $GITHUB_OUTPUT
+
